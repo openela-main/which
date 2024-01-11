@@ -1,13 +1,14 @@
 Summary: Displays where a particular program in your path is located
 Name: which
 Version: 2.21
-Release: 18%{?dist}
+Release: 20%{?dist}
 License: GPLv3
 Source0: http://ftp.gnu.org/gnu/which/%{name}-%{version}.tar.gz
 Source1: which2.sh
 Source2: which2.csh
 Patch0: which-2.21-coverity-fixes.patch
 Patch1: which-2.21-coverity.patch
+Patch2: which-2.21-path_max.patch
 Url: https://savannah.gnu.org/projects/which/
 Requires: coreutils
 BuildRequires: gcc
@@ -21,6 +22,7 @@ the specified program is in your PATH.
 %setup -q
 %patch0 -p1 -b .coverity
 %patch1 -p1 -b .coverity2
+%patch2 -p1 -b .path_max
 
 %build
 %configure
@@ -42,6 +44,12 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %{_mandir}/man1/which.1*
 
 %changelog
+* Wed Mar 22 2023 Than Ngo <than@redhat.com> - 2.21-20
+- Related: #2140566, bring test over from Brew dist-git
+
+* Tue Mar 21 2023 Than Ngo <than@redhat.com> - 2.21-19
+- Resolves: #2140566, which fails for long path
+
 * Mon Apr 11 2022 Than Ngo <than@redhat.com> - 2.21-18
 - Resolves: #2044450 - custom profile generates shell error
 
