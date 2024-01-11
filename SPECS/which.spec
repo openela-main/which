@@ -1,12 +1,14 @@
 Summary: Displays where a particular program in your path is located
 Name: which
 Version: 2.21
-Release: 28%{?dist}
+Release: 29%{?dist}
 License: GPLv3
 Source0: http://ftp.gnu.org/gnu/which/%{name}-%{version}.tar.gz
 Source1: which2.sh
 Source2: which2.csh
 Patch0: which-2.21-coverity-fixes.patch
+Patch1: which-2.21-path_max.patch
+
 Url: https://savannah.gnu.org/projects/which/
 BuildRequires: make
 BuildRequires:  gcc
@@ -19,6 +21,7 @@ the specified program is in your PATH.
 %prep
 %setup -q
 %patch0 -p1 -b .coverity
+%patch1 -p1 -b .path_max
 
 %build
 %configure
@@ -40,6 +43,9 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %{_mandir}/man1/which.1*
 
 %changelog
+* Mon Mar 27 2023 Than Ngo <than@redhat.com> - 2.21-29
+- Resolves: #2181974, which fails for long path
+
 * Fri Apr 15 2022 Than Ngo <than@redhat.com> - 2.21-28
 - Resolves: #2050996, error on login when using ksh as the default shell
 
