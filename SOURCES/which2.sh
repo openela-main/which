@@ -1,7 +1,14 @@
 # shellcheck shell=sh
 # Initialization script for bash, sh, mksh and ksh
 
-case "$(basename $(readlink /proc/$$/exe))" in
+
+if [ -r /proc/$$/exe ]; then
+    SHELLNAME=$(basename $(readlink /proc/$$/exe))
+else
+    SHELLNAME="unknown"
+fi
+
+case "$SHELLNAME" in
 *ksh*)
     which_declare=""
     which_opt=""

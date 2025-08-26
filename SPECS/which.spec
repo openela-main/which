@@ -1,7 +1,7 @@
 Summary: Displays where a particular program in your path is located
 Name: which
 Version: 2.21
-Release: 20%{?dist}
+Release: 21%{?dist}
 License: GPLv3
 Source0: http://ftp.gnu.org/gnu/which/%{name}-%{version}.tar.gz
 Source1: which2.sh
@@ -44,6 +44,11 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %{_mandir}/man1/which.1*
 
 %changelog
+* Thu Jul 03 2025 Than Ngo <than@redhat.com> - 2.21-21
+- Add a check to ensure that /proc/$$/exe can be read
+  thanks to mbliss@redhat.com for the report and the proposed patch
+  Resolves: RHEL-101069
+
 * Wed Mar 22 2023 Than Ngo <than@redhat.com> - 2.21-20
 - Related: #2140566, bring test over from Brew dist-git
 
